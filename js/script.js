@@ -4,8 +4,23 @@ const tagInputElem = $.querySelector("input");
 const tagsCountSpanElem = $.querySelector(".num-tag");
 const removeAllBtn = $.querySelector(".remove-btn");
 
-let tags = ["sabzlearn", "js", "reactjs"];
+let tags = [];
 let maxTagsCount = 10;
+
+const addTag = (event) => {
+  if (event.key === "Enter") {
+    let tagTitle = event.target.value;
+
+    if (tags.length < 10 && !tags.includes(tagTitle.toLowerCase())) {
+      tagTitle.split(",").forEach((tag) => {
+        tags.push(tag.toLowerCase());
+      });
+    }
+
+    event.target.value = "";
+    createTag();
+  }
+};
 
 const removeAllLis = () => {
   tagsUlElem.querySelectorAll("li").forEach((tag) => tag.remove());
@@ -36,21 +51,6 @@ const createTag = () => {
   });
 
   countTags();
-};
-
-const addTag = (event) => {
-  if (event.key === "Enter") {
-    let tagTitle = event.target.value;
-
-    if (tags.length < 10 && !tags.includes(tagTitle.toLowerCase())) {
-      tagTitle.split(",").forEach((tag) => {
-        tags.push(tag.toLowerCase());
-      });
-    }
-
-    event.target.value = "";
-    createTag();
-  }
 };
 
 createTag();
